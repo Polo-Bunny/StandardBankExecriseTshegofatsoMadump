@@ -5,19 +5,21 @@ const scoreObtained = document.querySelector(".score-obtained")
 const questionsRemaining = document.querySelector(".questions-remaining")
 const questionProgress = document.querySelector(".progress-inner")
 const quizEnd = document.querySelector(".end-message")
-const resetButton = document.querySelector(".rest-button")
+const resetButton = document.querySelector(".reset-button")
 let state ={
     score:0,
     QuestionCount: 10,
+    
 }
 
 function updateProblem()
 {
     state.currentProblem = generateProb()
-    problemElement.innerHTML =`${state.currentProblem.numberOne} ${state.currentProblem.operator} ${state.currentProblem.numberTwo}`
+    probElement.innerHTML =`${state.currentProblem.numberOne} ${state.currentProblem.operator} ${state.currentProblem.numberTwo}`
     ourFeild.value = ""
     ourFeild.focus()
 }
+updateProblem()
 function generateNum(max)
 {
     return Math.floor(Math.random()*( max +1 ))
@@ -27,11 +29,86 @@ function generateNum(max)
 
 function generateProb()
 {
+   let tempNum1 =0
+   let tempCorrect=0 
+   let tempNum2=0
+   let tempoperator = ['+','-','x','/'][generateNum(3)]
+
+   switch(tempoperator){
+    case'+':
+    tempNum1= generateNum(12)
+    tempNum2 = generateNum(12)
+    tempCorrect = tempNum1 + tempNum2
     return {
-        numberOne: generateNum(10),
-        numberTwo: generateNum(10),
-        operator: ['+','-','x','/'][generateNum(3)]
+
+        numberOne: tempNum1,
+        numberTwo: tempNum2,
+        operator: tempoperator,
+        correctAns : tempCorrect 
+
+        
     }
+
+    case'-':
+    tempNum1= generateNum(12)
+    tempNum2 = generateNum(12)
+    tempCorrect = tempNum1 - tempNum2
+    return {
+
+        numberOne: tempNum1,
+        numberTwo: tempNum2,
+        operator: tempoperator,
+        correctAns : tempCorrect 
+
+        
+    }
+
+    case'/':
+    tempNum1= generateNum(50)
+    do{
+        tempNum2 = generateNum(50)
+
+    }while(tempNum2 === 0)
+   
+    tempCorrect = tempNum1 / tempNum2
+    return {
+
+        numberOne: tempNum1,
+        numberTwo: tempNum2,
+        operator: tempoperator,
+        correctAns : tempCorrect 
+
+        
+    }
+
+    case'x':
+    tempNum1 = generateNum(50)
+    tempNum2 = generateNum(50)
+    tempCorrect = tempNum1 * tempNum2
+    return {
+
+        numberOne: tempNum1,
+        numberTwo: tempNum2,
+        operator: tempoperator,
+        correctAns : tempCorrect 
+
+        
+    }
+    default:
+        return {
+
+            numberOne: tempNum1,
+            numberTwo: tempNum2,
+            operator: tempoperator,
+            correctAns : tempCorrect 
+    
+            
+        }
+
+    
+   }
+
+
 }
 
 ourForm.addEventListener("submit",Submithandeling)
@@ -40,56 +117,43 @@ function Submithandeling(evt)
 {
     //Stops browser from reloading and redirecting
     evt.preventDefault()
-    let correctAns
+
     const prob = state.currentProblem
-    if(prob.operator == "+") {
-        prob.numberOne = generateNum(12)
-        prob.numberTwo = generateNum(12)
-        correctAns = prob.numberOne + prob.numberTwo}
 
-    if(prob.operator == "-"){
-        prob.numberOne = generateNum(12)
-        prob.numberTwo = generateNum(12) 
-        correctAns = prob.numberOne - prob.numberTwo}
-
-    if(prob.operator == "x"){
-        prob.numberOne = generateNum(50)
-        prob.numberTwo = generateNum(50) 
-        correctAns = prob.numberOne * prob.numberTwo
-    }
-    if(prob.operator == "/"){
-        prob.numberOne = generateNum(50)
-        prob.numberTwo = generateNum(50) 
-        correctAns = prob.numberOne / prob.numberTwo}
-
-    if(parseInt(ourFeild.value,10) === correctAns)
+    if(parseFloat(ourFeild.value) === prob.correctAns)
     {
         state.score++
+        state.QuestionCount--
+        scoreObtained.textContent = state.score
         alert("Correct Answer")
-        questionsRemaining.textContent = 10 - state.score
+        
+        questionsRemaining.textContent = state.QuestionCount
+    
         updateProblem()
         displayQuestionBar()
     }else
     {
         state.QuestionCount--
-     
         scoreObtained.textContent = state.score
+        questionsRemaining.textContent = state.QuestionCount
         probElement.classList.add("animate-wrong")
-    setTimeout(() =>         probElement.classList.remove("animate-wrong"),331)
+         setTimeout(() => probElement.classList.remove("animate-wrong"),331)
+         updateProblem()
+        displayQuestionBar()
      }
-    QuizCheck()
+    QuizCheck(state.QuestionCount)
 
 }
-function QuizCheck()
+function QuizCheck(questCont)
 {
-    if(state.QuestionCount === 0)
+    if(questCont === 0 )
     {
 
         quizEnd.textContent ="You have completed the quiz you got" + state.score +"/"+10+"would you like to play again"
         document.body.classList.add("overlay-is-open")
         //arrow function
         setTimeout(()=>focus(),332)
-       // quizReset()
+       quizReset()
 
     }
 
@@ -112,4 +176,4 @@ function quizReset()
 function displayQuestionBar()
 {
     questionProgress.style.transform = `scaleX(${state.QuestionCount/10})`
-}
+}  

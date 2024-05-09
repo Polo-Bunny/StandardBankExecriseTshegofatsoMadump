@@ -3,16 +3,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="=width=device-width , initial-scale=1.0">
     <title>Arthima Quiz</title>
-    <link rel="stylesheet" herf="styles.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body class="overlay-is-open">
 
 <div class="main-ui">
     <p class="problem"></p>
   
-    <form action="" class="our-form">
+    <form action="" class="our-form" id="answer-sheet">
       <input type="text" class="our-feild" autocomplete="off">
-      <button>Submit</button>
+      <button >Submit</button>
     </form>
   
     <p class="status">You have <span class="questions-remaining">10</span> more questions, and currently have <span class="score-obtained">0</span> points.</p>
@@ -37,8 +37,8 @@
 
   <div class="overlay">
     <div class="overlay-inner">
-      <p class="end-message"></p>
-      <button class="reset-button">Start Over</button>
+      <span class="end-message"></span>
+      <button  class="reset-button">Start Over</button>
     </div>
     <script src="main.js"></script>
   </div>
