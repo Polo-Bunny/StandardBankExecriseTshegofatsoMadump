@@ -127,9 +127,9 @@ body {
   }
   
   .reset-button:hover {
-    background-color: #00367e;
+    background-color: #1c4a14;
   }
   
   .reset-button:focus {
-    background-color: #00275a;
+    background-color: #501e0f;
   }
