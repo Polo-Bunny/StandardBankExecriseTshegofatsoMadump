@@ -141,22 +141,21 @@ function Submithandeling(evt)
          updateProblem()
         displayQuestionBar()
      }
-    QuizCheck(state.QuestionCount)
+    QuizCheck()
 
 }
-function QuizCheck(questCont)
+function QuizCheck()
 {
-    if(questCont === 0 )
+    if(state.QuestionCount === 0 )
     {
-
-        quizEnd.textContent ="You have completed the quiz you got" + state.score +"/"+10+"would you like to play again"
+        quizEnd.textContent ="You have completed the quiz you got " + state.score +"/"+10+" would you like to play again"
         document.body.classList.add("overlay-is-open")
         //arrow function
-        setTimeout(()=>focus(),332)
-       quizReset()
+        setTimeout(()=> resetButton.focus(),333)
 
     }
-
+ 
+    
 
 }
 resetButton.addEventListener("click",quizReset)
@@ -165,8 +164,9 @@ function quizReset()
 {
     document.body.classList.remove("overlay-is-open")    
     updateProblem()
+    state.QuestionCount = 10
     state.score = 0
-    state.questionsRemaining = 10
+    //state.questionsRemaining = 10
     questionsRemaining.textContent =10
     scoreObtained.textContent =0
     displayQuestionBar()

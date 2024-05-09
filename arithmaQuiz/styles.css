@@ -33,18 +33,23 @@ body {
   
   .progress-inner {
     position: absolute;
+    
     top: 0;
     bottom: 0;
     width: 100%;
-    background-color: #7ecc00;
+    
+  
+
+    background-color: #98a483;
     opacity: .57;
     transform: scaleX(0);
     transform-origin: center left;
     transition: transform .4s ease-out;
+    
   }
   
   .box {
-    height: 20px;
+    height: 40px;
     border-right: 1px solid #c7c7c7;
     flex: 1;
   }
